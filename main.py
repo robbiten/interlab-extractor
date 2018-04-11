@@ -13,6 +13,15 @@ def exitapplication(message):
     print(message)
     input("Press Enter to continue...")
     sys.exit()
+
+def errorCheckDelimiterCount(parsedline,inProvadm,inProvdat, provadmDelCountError, provdatDelCountError):
+    if inProvadm == True:
+        if parsedline.count(';') != 26:
+            provadmDelCountError = provadmDelCountError + 1
+    if inProvdat == True:
+        if parsedline.count(';') != 11:
+            provdatDelCountError = provdatDelCountError + 1
+    return(provadmDelCountError,provdatDelCountError)
     
 def main():
     
@@ -27,15 +36,7 @@ def main():
     headerProvdat = 'Lablittera;Metodbeteckning;Parameter;Mätvärdetext;Mätvärdetal;Mätvärdetalanm;Enhet;Rapporteringsgräns;Detektionsgräns;Mätosäkerhet;Mätvärdespår;Parameterbedömning;Kommentar;'
     provadmDelCountError = 0
     provdatDelCountError = 0
-    
-    def errorCheckDelimiterCount(parsedline,inProvadm,inProvdat, provadmDelCountError, provdatDelCountError):
-        if inProvadm == True:
-            if parsedline.count(';') != 26:
-                provadmDelCountError = provadmDelCountError + 1
-        if inProvdat == True:
-            if parsedline.count(';') != 11:
-                provdatDelCountError = provdatDelCountError + 1
-        return(provadmDelCountError,provdatDelCountError)
+
     #open dialogue "Browse to .lab-file"
 
 
@@ -134,7 +135,14 @@ def main():
     fileProvadm.close()
     fileProvdat.close()
     
+    print('PROVADM')
+    print('Numbers of lines parsed ')
     print('Number of delimiter errors in provadm ',provadmDelCountError)
+    
+    print('')
+    
+    print('PROVDAT')
+    print('Numbers of lines parsed ')
     print('Number of delimiter errors in provdat ',provdatDelCountError)
                 
 main();
@@ -148,4 +156,4 @@ main();
 # TODO
 # 1. Error messages in console, like delimiter count
 # 2. Writing to log with error messages
-
+# 3. Consider it to be a two part program, one that extracts the files, one that parses it and analyses it. When parsing the files, consider using pyTables. 
